@@ -82,19 +82,20 @@ for resolution in resolutions:
 
 # Plotting PSNR vs Bitrate, Compression Ratio vs Bitrate, and Compression Ratio vs PSNR for every resolution
 plot_titles = ['PSNR vs Bitrate', 'Compression Ratio vs Bitrate', 'Compression Ratio vs PSNR']
+x_labels = ['Bitrate (kbps)', 'Bitrate (kbps)', 'PSNR (dB)']
 y_labels = ['PSNR (dB)', 'Compression Ratio', 'Compression Ratio']
 y_columns = ['PSNR', 'compression_ratio', 'compression_ratio']
 
-for i, (title, y_label, y_col) in enumerate(zip(plot_titles, y_labels, y_columns)):
+for i, (title, x_label, y_label, y_col) in enumerate(zip(plot_titles, x_labels, y_labels, y_columns)):
     for resolution in resolutions:
         subset = df[df['resolution'] == resolution]
         fig, ax = plt.subplots(figsize=(10, 6))
         for codec, color in zip(codecs, colors):
             subset_codec = subset[subset['codec'] == codec]
-            ax.plot(subset_codec['bitrate_kbps'], subset_codec[y_col],
+            ax.plot(subset_codec['PSNR'] if 'PSNR' in x_label else subset_codec['bitrate_kbps'], subset_codec[y_col],
                     marker='x', linestyle='-', color=color, label=codec)
         ax.set_title(f'{title} ({resolution})')
-        ax.set_xlabel('Bitrate (kbps)')
+        ax.set_xlabel(x_label)
         ax.set_ylabel(y_label)
         ax.legend()
         save_plot(fig, f'{title.lower().replace(" ", "_")}_{resolution}.png')
