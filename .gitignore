@@ -4,3 +4,8 @@ output
 font
 .idea
 .history
+vmaf.json
+*.y4m
+*.yuv
+*.avi
+*.mp4
