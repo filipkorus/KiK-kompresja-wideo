@@ -1,0 +1,6 @@
+ffmpeg -i "./videos/big_buck_bunny_1080p.mov" -vf "drawtext=fontfile=./font/Arial.ttf:text='Frame\: %{n}':x=(w-tw-10):y=10:fontsize=80:fontcolor=red" -c:v mpeg4 -y "./videos/num_frames_big_buck_bunny_1080p.mov"
+
+
+ffmpeg -i "./videos/num_frames_big_buck_bunny_1080p.mov" -vf '[in]select=eq(pict_type\,B),showinfo[out]' "./output/b.big_buck_bunny_1080p.mov"
+ffmpeg -i "./videos/num_frames_big_buck_bunny_1080p.mov" -vf '[in]select=eq(pict_type\,I),showinfo[out]' "./output/i.big_buck_bunny_1080p.mov"
+ffmpeg -i "./videos/num_frames_big_buck_bunny_1080p.mov" -vf '[in]select=eq(pict_type\,P),showinfo[out]' "./output/p.big_buck_bunny_1080p.mov"
